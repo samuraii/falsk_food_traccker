@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ pretty_format }}</h3>
+            </div>
+
+            <div class="panel-body">
+
+                <form method="POST" action="{{ url_for('view_day', date=date) }}">
+                    <div class="form-group">
+                        <select class="form-control" name="food-select">
+                            {% for food in food_results %}
+                            <option value="{{ food.id }}">{{ food.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add</button>
+
+                </form>
+
+                <div class="page-header"></div>
+
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="active"><a>Total</a></li>
+                    <li><a>Protein: <span class="badge">{{ totals.protein }}</span></a></li>
+                    <li><a>Carbohydates: <span class="badge">{{ totals.carbohydrates }}</span></a></li>
+                    <li><a>Fat: <span class="badge">{{ totals.fat }}</span></a></li>
+                    <li><a>Calories: <span class="badge">{{ totals.calories }}</span></a></li>
+                </ul>
+
+            </div>
+
+            <div class="page-header"></div>
+
+            <div class="panel-body">
+                {% for food_item in food_for_day %}
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="active"><a>{{ food_item.name }}</a></li>
+                    <li><a>Protein: <span class="badge">{{ food_item.protein }}</span></a></li>
+                    <li><a>Carbohydates: <span class="badge">{{ food_item.carbohydrates }}</span></a></li>
+                    <li><a>Fat: <span class="badge">{{ food_item.fat }}</span></a></li>
+                    <li><a>Calories: <span class="badge">{{ food_item.calories }}</span></a></li>
+                    <li><a href="/delete?id={{ food_item.id }}&date={{ date }}" type="button" class="btn btn-warning">Delete</a></li>
+                </ul>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div>
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="new-day">New Day</label>
+                <input type="date" class="form-control" id="new-day" name="new-day">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+
+        <div class="page-header"></div>
+
+        {% for date in all_dates %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a class="link" href="/view_day/{{ date.entry_data }}"><h3 class="panel-title">{{ date.pretty_format }}</h3></a>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills" role="tablist">
+                    <li><a>Protein: <span class="badge">{{ date.protein if date.protein != None else 0 }}</span></a></li>
+                    <li><a>Carbohydates: <span class="badge">{{ date.carbohydrates if date.carbohydrates != None else 0 }}</span></a></li>
+                    <li><a>Fat: <span class="badge">{{ date.fat if date.fat != None else 0 }}</span></a></li>
+                    <li><a>Calories: <span class="badge">{{ date.calories if date.calories != None else 0}}</span></a></li>
+                    <li><a href="{{ url_for('view_day', date=date.entry_data) }}" type="button" class="btn btn-link">View Detail</a></li>
+                    <li><a href="/delete?day={{ date.entry_data }}" type="button" class="btn btn-warning">Delete</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
